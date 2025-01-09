@@ -19,9 +19,6 @@ module AccreditedRepresentativePortal
             class_name: 'PowerOfAttorneyRequestResolution',
             inverse_of: :power_of_attorney_request
 
-    has_many :resolutions,
-             class_name: 'PowerOfAttorneyRequestResolution'
-
     belongs_to :power_of_attorney_holder,
                inverse_of: :power_of_attorney_requests,
                polymorphic: true
@@ -36,8 +33,8 @@ module AccreditedRepresentativePortal
       created_at + 60.days
     end
 
-    scope :pending, -> { left_joins(:resolutions).where(resolutions: { resolving_type: nil }) }
-    scope :completed, -> { joins(:resolutions) }
+    scope :pending, -> { left_joins(:resolution).where(resolution: { resolving_type: nil }) }
+    scope :completed, -> { joins(:resolution) }
 
     private
 
