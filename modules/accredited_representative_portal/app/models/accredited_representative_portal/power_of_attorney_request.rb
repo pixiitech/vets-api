@@ -31,8 +31,8 @@ module AccreditedRepresentativePortal
 
     delegate :poa_code, to: :accredited_individual
 
-    scope :pending, -> { left_joins(:resolution).where(resolution: { resolving_type: nil }) }
-    scope :completed, -> { joins(:resolution) }
+    scope :unresolved, -> { where.missing(:resolution) }
+    scope :resolved, -> { joins(:resolution) }
 
     private
 
